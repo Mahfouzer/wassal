@@ -16,4 +16,3 @@ function wassal(targetElement,addedClass){
 	})
 }
 
-// wassal(document.getElementsByClassName("supernova")[2],"lol")
