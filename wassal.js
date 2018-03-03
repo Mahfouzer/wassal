@@ -1,3 +1,14 @@
+function debounce(fn, time) {
+  let timeout;
+  return function() {
+    const functionCall = function(){
+    	fn.apply(this, arguments)
+    }
+    clearTimeout(timeout);
+    timeout = setTimeout(functionCall, time);
+  }
+}
+
 function wassal(targetElement,addedClass){
 	let windowHeight =  window.innerHeight;
 	let there = targetElement;
@@ -6,12 +17,14 @@ function wassal(targetElement,addedClass){
         tarPosition += targetElement.offsetTop - targetElement.scrollTop;
         targetElement = targetElement.offsetParent;
     }
-	window.addEventListener('scroll', function Gotthere(e) {	
+    	let gotThere = debounce(function(){
 		let currentScrollPositionTop = window.scrollY;
 		let currentScrollPositionBottom = windowHeight + currentScrollPositionTop;
 		if(tarPosition < currentScrollPositionBottom){
 			there.classList.add(addedClass);
-			window.removeEventListener("scroll", Gotthere)
-		}
-	})
+			window.removeEventListener("scroll",gotThere)
+		}},250);
+
+	window.addEventListener('scroll', gotThere);
+
 }
